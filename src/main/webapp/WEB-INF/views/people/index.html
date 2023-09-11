@@ -9,6 +9,12 @@
 
 <!--<p th:text="${book.ge()}">VALUE</p>-->
 <!--th:if book getname ==null sout ""message""-->
+<div th:if="${books.isEmpty()}">Has not any books</div>
+
+<div th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.getId()})}"
+       th:text="${book.getName()}">user</a>
+</div>
 
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
 

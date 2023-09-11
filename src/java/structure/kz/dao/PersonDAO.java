@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import structure.kz.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
@@ -23,8 +24,12 @@ public class PersonDAO {
                 new BeanPropertyRowMapper<>(Person.class));
     }
 
-    public Person index(int id){
+    public Optional<Person> index(String name){
+        return jdbcTemplate.query("SELECT *FROM Person WHERE fullName=?",
+                new Object[] {name}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+    }
 
+    public Person index(int id){
         return jdbcTemplate.query(
                 "SELECT *FROM person WHERE id=?",new Object[]{id},
                 new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);

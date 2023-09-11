@@ -1,4 +1,9 @@
 package structure.kz.models;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+
 public class Book {
     public int getId() {
         return id;
@@ -9,8 +14,12 @@ public class Book {
     }
 
     private int id;
+    @NotEmpty(message = "Name should not be empty")
     private String name;
+    @NotEmpty(message = "Author's name should not be empty")
+    @Pattern(regexp = "[A-Z]\\w+\\h[A-Z]\\w+",message = "Your first name and last name's first letter have to be BIG ex:'Qusain Sayat'")
     private String author;
+    @Min(value = 500,message = "Year of book should not be less than 0")
     private int year;
     public Book(){
 

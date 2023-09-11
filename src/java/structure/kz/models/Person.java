@@ -1,5 +1,9 @@
 package structure.kz.models;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+
 import java.util.List;
 
 public class Person {
@@ -12,9 +16,12 @@ public class Person {
         return id;
     }
 
+    @NotEmpty(message = "You did not entered name, there is empty")
+    @Pattern(regexp = "[A-Z]\\w+\\h[A-Z]\\w+",message = "Your first name and last name's first letter have to be BIG ex:'Qusain Sayat'")
     private String fullName;
 
     public Person() {
+
     }
 
 
@@ -24,7 +31,9 @@ public class Person {
         this.year = year;
     }
 
+    @Min(value = 1900, message = "Ohh man are you alive really?")
     private int year;
+
 
     public String getFullName() {
         return fullName;
