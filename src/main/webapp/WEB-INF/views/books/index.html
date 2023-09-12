@@ -7,9 +7,9 @@
 <body>
 <p th:text="${book.getName() + ', ' + book.getYear()+', '+book.getAuthor()}">VALUE</p>
 
-<p th:text="${person.fullName}">VALUE</p>
 
 
+<div th:if="owner_id==0">There is no owner</div>
 
 <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
 

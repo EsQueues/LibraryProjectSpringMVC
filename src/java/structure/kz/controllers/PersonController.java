@@ -15,13 +15,11 @@ import structure.kz.util.PersonValidator;
 @RequestMapping("/people")
 public class PersonController {
     private final PersonDAO personDAO;
-    private final BookDAO bookDAO;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PersonController(PersonDAO personDAO, BookDAO bookDAO, PersonValidator personValidator) {
+    public PersonController(PersonDAO personDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
-        this.bookDAO = bookDAO;
         this.personValidator = personValidator;
     }
     @GetMapping()
@@ -35,7 +33,7 @@ public class PersonController {
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model){
         model.addAttribute("person",personDAO.index(id));
-        model.addAttribute("books",bookDAO.for_people(id));
+        model.addAttribute("books",personDAO.for_people(id));
         return "people/index";
     }
 

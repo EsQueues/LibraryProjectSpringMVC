@@ -13,6 +13,8 @@ import structure.kz.models.Book;
 import structure.kz.models.Person;
 import structure.kz.util.PersonValidator;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -32,12 +34,24 @@ public class BookController {
         return "books/list";
     }
     @GetMapping("{id}")
-    public String index(@PathVariable("id") int id,@PathVariable("owner_id")int owner_id,Model model){
-//        personValidator.validate();
-        model.addAttribute("person",personDAO.index(owner_id));
+    public String index(@PathVariable("id") int id,@ModelAttribute("person")Person person, Model model){
         model.addAttribute("book",bookDAO.index(id));
+        Optional<Person>bookOwner= bookDAO.getOwnerId(id);
+        if(bookOwner.isPresent())
+            model.addAttribute("person",bookOwner);
+        else
+            model.addAttribute("people",personDAO.list());
+
         return "books/index";
     }
+
+    public String release(){
+        return "d";
+    }
+
+
+
+
 
     @GetMapping("/new")
     public String newBook(Model model){

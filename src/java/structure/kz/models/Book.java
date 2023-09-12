@@ -21,6 +21,7 @@ public class Book {
     private String author;
     @Min(value = 500,message = "Year of book should not be less than 0")
     private int year;
+
     public Book(){
 
     }
@@ -30,6 +31,7 @@ public class Book {
         this.name = name;
         this.author = author;
         this.year = year;
+
     }
 
     public String getName() {

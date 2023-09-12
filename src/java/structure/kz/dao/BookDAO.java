@@ -4,8 +4,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import structure.kz.models.Book;
+import structure.kz.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BookDAO {
@@ -19,14 +21,16 @@ public class BookDAO {
         return jdbcTemplate.query("SELECT *FROM book",
                 new BeanPropertyRowMapper<>(Book.class));
     }
+
+    public Optional<Person> getOwnerId(int id){
+        return jdbcTemplate.query("SELECT Person.* FROM book  JOIN person ON person.id=book.owner_id" +
+                " WHERE book.id=?",new Object[]{id},new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+    }
     public Book index(int id){
         return jdbcTemplate.query("SELECT *FROM book WHERE id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Book.class)).stream().findAny().orElse(null);
     }
-    public List<Book> for_people(int person_id){
-        return jdbcTemplate.query("SELECT *FROM book WHERE owner_id=?",new Object[]{person_id},
-                new BeanPropertyRowMapper<>(Book.class));
-    }
+
     public void save(Book book){
         jdbcTemplate.update("INSERT INTO book(name,author,year) VALUES(?,?,?)",
                 book.getName(),book.getAuthor(),book.getYear());
