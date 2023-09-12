@@ -28,12 +28,10 @@ public class PersonController {
         return "people/list";
     }
 
-
-
     @GetMapping("/{id}")
     public String index(@PathVariable("id") int id, Model model){
         model.addAttribute("person",personDAO.index(id));
-        model.addAttribute("books",personDAO.for_people(id));
+        model.addAttribute("books",personDAO.getBooksByPersonId(id));
         return "people/index";
     }
 

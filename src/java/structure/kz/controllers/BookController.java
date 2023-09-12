@@ -20,7 +20,6 @@ import java.util.Optional;
 public class BookController {
     private final BookDAO bookDAO;
     private final PersonDAO personDAO;
-    private PersonValidator personValidator;
 
     @Autowired
     public BookController(BookDAO bookDAO, PersonDAO personDAO) {
@@ -38,19 +37,23 @@ public class BookController {
         model.addAttribute("book",bookDAO.index(id));
         Optional<Person>bookOwner= bookDAO.getOwnerId(id);
         if(bookOwner.isPresent())
-            model.addAttribute("person",bookOwner);
+            model.addAttribute("owner",bookOwner.get());
         else
             model.addAttribute("people",personDAO.list());
 
         return "books/index";
     }
 
-    public String release(){
-        return "d";
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id") int id){
+        bookDAO.release(id);
+        return "redirect:/books/"+id;
     }
-
-
-
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id,@ModelAttribute("person")Person selectedPerson){
+        bookDAO.assign(id,selectedPerson);
+        return "redirect:/books/"+id;
+    }
 
 
     @GetMapping("/new")

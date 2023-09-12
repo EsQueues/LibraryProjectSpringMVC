@@ -9,14 +9,25 @@
 
 <!--<p th:text="${book.ge()}">VALUE</p>-->
 <!--th:if book getname ==null sout ""message""-->
-<div th:if="${books.isEmpty()}">Has not any books</div>
+<div th:if="${books.isEmpty()}"><p>Has not any books</p><hr/></div>
 
-<div th:each="book : ${books}">
-    <a th:href="@{/books/{id}(id=${book.getId()})}"
-       th:text="${book.getName()}">user</a>
+<div th:if="${!books.isEmpty()}">
+    <hr/>
+    <b>Books:</b>
+    <br>
+    <table th:each="book : ${books}">
+        <tr th:text="${book.getName()+','+book.getAuthor()}">book </tr>
+    </table>
+
+    <hr/>
 </div>
 
-<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+
+
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+
+    <input type="submit" value="Edit">
+</form>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="Delete"/>

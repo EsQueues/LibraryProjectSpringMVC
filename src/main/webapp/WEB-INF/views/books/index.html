@@ -9,10 +9,34 @@
 
 
 
-<div th:if="owner_id==0">There is no owner</div>
+<div th:if="${owner}">
+    <span>Now the book is at: </span> <span th:text="${owner.getFullName}">Person name</span>
 
-<a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
+    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+        <input type="submit" value="Release the book">
+    </form>
+</div>
 
+<div th:if="${people}">
+<span>Now this book is free. Do you assign to someone?</span>
+    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+        <label for="person">Choose person:</label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person: ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}"
+                    ></option>
+        </select>
+        <input type="submit" value="Assign">
+
+    </form>
+</div>
+
+
+<!--<a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>-->
+
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+
+    <input type="submit" value="Edit">
+</form>
 
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
