@@ -17,7 +17,7 @@ public class Person {
     }
 
     @NotEmpty(message = "You did not entered name, there is empty")
-    @Pattern(regexp = "[A-Z]\\w+\\h[A-Z]\\w+",message = "Your first name and last name's first letter have to be BIG ex:'Qusain Sayat'")
+    @Pattern(regexp = "^[A-Z][a-zA-Z]* [A-Z][a-zA-Z]*$", message = "Your first name and last name's first letter have to be capitalized, e.g., 'Qusain Sayat'")
     private String fullName;
 
     public Person() {

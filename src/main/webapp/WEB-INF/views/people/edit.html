@@ -10,6 +10,7 @@
     <label for="fullName">Enter full name: </label>
     <input type="text" th:field="*{fullName}" id="fullName"/>
     <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</div>
+
     <br/>
     <label for="year">Enter year: </label>
     <input type="text" th:field="*{year}" id="year"/>

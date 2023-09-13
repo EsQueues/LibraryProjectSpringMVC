@@ -58,11 +58,14 @@ public class PersonController {
     }
     //need to understand
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Person person,@PathVariable("id")int id,BindingResult bindingResult){
-        personValidator.validate(person,bindingResult);
-
+    public String update(@ModelAttribute("person") @Valid Person person,BindingResult bindingResult,@PathVariable("id")int id
+                         ){
         if(bindingResult.hasErrors())
             return "people/edit";
+
+        personValidator.validate(person,bindingResult);
+
+
         personDAO.update(id, person);
         return "redirect:/people";
     }
